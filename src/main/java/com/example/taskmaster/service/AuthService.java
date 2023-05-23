@@ -30,17 +30,18 @@ public class AuthService {
     private final UserDetailsService userDetailsService;
     private final JWTUtils jwtUtils;
 
-    public Optional<TaskmasterUser> register(UserDTO userDTO) {
-        Optional<TaskmasterUser> existingUser = userRepository.findTaskmasterUserByEmail(userDTO.getEmail());
+    public ResponseEntity<?> register(UserDTO userDTO) {
+        TaskmasterUser existingUser = userRepository.findTaskmasterUserByEmail(userDTO.getEmail());
 
-        if (existingUser.isPresent()) {
-            return Optional.empty();
+        if (existingUser != null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(Collections.singletonMap("error", "User already exists"));
         }
 
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        TaskmasterUser newUser = TaskmasterUser.taskmasterUserFactory(userDTO);
-        userRepository.save(newUser);
-        return Optional.of(newUser);
+        userRepository.save(TaskmasterUser.taskmasterUserFactory(userDTO));
+        return ResponseEntity.ok("Successfully registered " + userDTO.getEmail());
+
     }
 
     public ResponseEntity<?> authenticateUser(AuthRequest request) {
@@ -57,6 +58,5 @@ public class AuthService {
         response.put("token", jwtToken);
 
         return ResponseEntity.ok(response);
-
     }
 }
