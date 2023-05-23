@@ -1,4 +1,4 @@
-package com.example.taskmaster.security;
+package com.example.taskmaster.service;
 
 import com.example.taskmaster.entity.TaskmasterUser;
 import com.example.taskmaster.repository.UserRepository;
