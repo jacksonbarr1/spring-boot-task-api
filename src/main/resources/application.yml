@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/taskmaster?useSSL=false&allowPublicKeyRetrieval=true
     username: root
-    password: root
+    password: admin
     driverClassName: com.mysql.cj.jdbc.Driver
 server:
   port: 8081

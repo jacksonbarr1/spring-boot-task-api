@@ -1,5 +1,6 @@
 package com.example.taskmaster.entity;
 
+import com.example.taskmaster.dto.UserDTO;
 import com.example.taskmaster.security.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -25,8 +26,6 @@ public class TaskmasterUser implements UserDetails {
     private int id;
 
     @Column(unique=true)
-    @Email
-    @NotNull
     private String email;
     private String password;
 
@@ -35,6 +34,17 @@ public class TaskmasterUser implements UserDetails {
     private String lastName;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public static TaskmasterUser taskmasterUserFactory(UserDTO userDTO) {
+        return builder()
+                .email(userDTO.getEmail())
+                .password(userDTO.getPassword())
+                .firstName(userDTO.getFirstName())
+                .lastName(userDTO.getLastName())
+                .enabled(true)
+                .role(Role.USER)
+                .build();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
