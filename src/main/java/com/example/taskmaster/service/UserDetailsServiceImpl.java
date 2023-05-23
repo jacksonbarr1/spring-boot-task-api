@@ -18,10 +18,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        Optional<TaskmasterUser> user = userRepository.findTaskmasterUserByEmail(email);
-        if (user.isEmpty()) {
+        TaskmasterUser user = userRepository.findTaskmasterUserByEmail(email);
+        if (user == null) {
             throw new UsernameNotFoundException("No user found with email: " + email);
         }
-        return user.get();
+        return user;
     }
 }
