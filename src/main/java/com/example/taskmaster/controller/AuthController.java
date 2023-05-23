@@ -29,11 +29,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO userDTO) {
-        if (authService.register(userDTO).isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("error", "Username already exists"));
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
-        // TODO align with authenticateUser
+        return authService.register(userDTO);
     }
 
     @PostMapping("/login")
