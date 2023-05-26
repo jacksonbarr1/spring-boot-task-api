@@ -3,6 +3,7 @@ package com.example.taskmaster.entity;
 import com.example.taskmaster.dto.Priority;
 import com.example.taskmaster.dto.TaskStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class Task {
     @ManyToOne
     private TaskmasterUser user;
 
-
+    @NotBlank
     private String taskName;
     private String description;
     private LocalDate dueDate;
