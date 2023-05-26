@@ -35,6 +35,12 @@ public class TaskmasterUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany
+    private List<Task> tasks;
+
+    @OneToMany
+    private List<Project> projects;
+
     public static TaskmasterUser taskmasterUserFactory(UserDTO userDTO) {
         return builder()
                 .email(userDTO.getEmail())
