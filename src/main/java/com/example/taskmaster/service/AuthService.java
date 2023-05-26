@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -58,5 +59,10 @@ public class AuthService {
         response.put("token", jwtToken);
 
         return ResponseEntity.ok(response);
+    }
+
+    private int getIdFromAuthentication(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userRepository.findTaskmasterUserByEmail(userDetails.getUsername()).getId();
     }
 }
