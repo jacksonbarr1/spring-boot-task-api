@@ -1,4 +1,4 @@
-package com.example.taskmaster.entity;
+package com.example.taskapi.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class Project {
     private int id;
 
     @ManyToOne
-    private TaskmasterUser user;
+    private UserEntity user;
 
     private String projectName;
 

@@ -1,10 +1,10 @@
-package com.example.taskmaster.service;
+package com.example.taskapi.service;
 
-import com.example.taskmaster.dto.AuthRequest;
-import com.example.taskmaster.dto.UserDTO;
-import com.example.taskmaster.entity.TaskmasterUser;
-import com.example.taskmaster.repository.UserRepository;
-import com.example.taskmaster.security.JWTUtils;
+import com.example.taskapi.dto.AuthRequest;
+import com.example.taskapi.dto.UserDTO;
+import com.example.taskapi.entity.UserEntity;
+import com.example.taskapi.repository.UserRepository;
+import com.example.taskapi.security.JWTUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class AuthService {
     private final JWTUtils jwtUtils;
 
     public ResponseEntity<?> register(UserDTO userDTO) {
-        TaskmasterUser existingUser = userRepository.findTaskmasterUserByEmail(userDTO.getEmail());
+        UserEntity existingUser = userRepository.findUserEntityByEmail(userDTO.getEmail());
 
         if (existingUser != null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -40,14 +40,14 @@ public class AuthService {
         }
 
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        userRepository.save(TaskmasterUser.taskmasterUserFactory(userDTO));
+        userRepository.save(UserEntity.userFactory(userDTO));
         return ResponseEntity.ok("Successfully registered " + userDTO.getEmail());
 
     }
 
     public ResponseEntity<?> authenticateUser(AuthRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        TaskmasterUser user = (TaskmasterUser) userDetailsService.loadUserByUsername(request.getEmail());
+        UserEntity user = (UserEntity) userDetailsService.loadUserByUsername(request.getEmail());
         if (user == null) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
@@ -63,6 +63,6 @@ public class AuthService {
 
     private int getIdFromAuthentication(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return userRepository.findTaskmasterUserByEmail(userDetails.getUsername()).getId();
+        return userRepository.findUserEntityByEmail(userDetails.getUsername()).getId();
     }
 }

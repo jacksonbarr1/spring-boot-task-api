@@ -1,7 +1,7 @@
-package com.example.taskmaster.entity;
+package com.example.taskapi.entity;
 
-import com.example.taskmaster.dto.Priority;
-import com.example.taskmaster.dto.TaskStatus;
+import com.example.taskapi.dto.Priority;
+import com.example.taskapi.dto.TaskStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class Task {
     private int id;
 
     @ManyToOne
-    private TaskmasterUser user;
+    private UserEntity user;
 
     @NotBlank
     private String taskName;

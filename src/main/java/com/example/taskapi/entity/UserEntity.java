@@ -1,10 +1,8 @@
-package com.example.taskmaster.entity;
+package com.example.taskapi.entity;
 
-import com.example.taskmaster.dto.UserDTO;
-import com.example.taskmaster.security.Role;
+import com.example.taskapi.dto.UserDTO;
+import com.example.taskapi.security.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +17,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "users")
-public class TaskmasterUser implements UserDetails {
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -41,7 +39,7 @@ public class TaskmasterUser implements UserDetails {
     @OneToMany
     private List<Project> projects;
 
-    public static TaskmasterUser taskmasterUserFactory(UserDTO userDTO) {
+    public static UserEntity userFactory(UserDTO userDTO) {
         return builder()
                 .email(userDTO.getEmail())
                 .password(userDTO.getPassword())

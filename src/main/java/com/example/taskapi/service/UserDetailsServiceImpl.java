@@ -1,14 +1,12 @@
-package com.example.taskmaster.service;
+package com.example.taskapi.service;
 
-import com.example.taskmaster.entity.TaskmasterUser;
-import com.example.taskmaster.repository.UserRepository;
+import com.example.taskapi.entity.UserEntity;
+import com.example.taskapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        TaskmasterUser user = userRepository.findTaskmasterUserByEmail(email);
+        UserEntity user = userRepository.findUserEntityByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("No user found with email: " + email);
         }

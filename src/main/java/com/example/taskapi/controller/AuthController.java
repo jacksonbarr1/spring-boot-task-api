@@ -1,9 +1,9 @@
-package com.example.taskmaster.controller;
+package com.example.taskapi.controller;
 
 
-import com.example.taskmaster.dto.AuthRequest;
-import com.example.taskmaster.dto.UserDTO;
-import com.example.taskmaster.service.AuthService;
+import com.example.taskapi.dto.AuthRequest;
+import com.example.taskapi.dto.UserDTO;
+import com.example.taskapi.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,10 +1,10 @@
-package com.example.taskmaster.service;
+package com.example.taskapi.service;
 
-import com.example.taskmaster.dto.AuthRequest;
-import com.example.taskmaster.dto.UserDTO;
-import com.example.taskmaster.entity.TaskmasterUser;
-import com.example.taskmaster.repository.UserRepository;
-import com.example.taskmaster.security.JWTUtils;
+import com.example.taskapi.dto.AuthRequest;
+import com.example.taskapi.dto.UserDTO;
+import com.example.taskapi.entity.UserEntity;
+import com.example.taskapi.repository.UserRepository;
+import com.example.taskapi.security.JWTUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -52,7 +52,7 @@ public class AuthServiceTest {
     public void registerUser_Success() {
         UserDTO userDTO = new UserDTO("test@test.com", "password123", "Test", "User");
 
-        when(userRepository.findTaskmasterUserByEmail(userDTO.getEmail())).thenReturn(null);
+        when(userRepository.findUserEntityByEmail(userDTO.getEmail())).thenReturn(null);
         when(passwordEncoder.encode(userDTO.getPassword())).thenReturn("encodedPassword");
 
         ResponseEntity<?> response = authService.register(userDTO);
@@ -60,28 +60,28 @@ public class AuthServiceTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Successfully registered " + userDTO.getEmail(), response.getBody());
 
-        verify(userRepository, times(1)).save(any(TaskmasterUser.class));
+        verify(userRepository, times(1)).save(any(UserEntity.class));
     }
 
     @Test
     public void registerUser_Failure_UserExists() {
         UserDTO userDTO = new UserDTO("test@test.com", "password123", "Test", "User");
-        TaskmasterUser existingUser = new TaskmasterUser();
+        UserEntity existingUser = new UserEntity();
 
-        when(userRepository.findTaskmasterUserByEmail(userDTO.getEmail())).thenReturn(existingUser);
+        when(userRepository.findUserEntityByEmail(userDTO.getEmail())).thenReturn(existingUser);
 
         ResponseEntity<?> response = authService.register(userDTO);
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
         assertEquals(Collections.singletonMap("error", "User already exists"), response.getBody());
 
-        verify(userRepository, times(0)).save(any(TaskmasterUser.class));
+        verify(userRepository, times(0)).save(any(UserEntity.class));
     }
 
     @Test
     public void authenticateUser_SuccessfulAuthentication() {
         AuthRequest request = new AuthRequest("test@example.com", "password123");
-        TaskmasterUser user = new TaskmasterUser();
+        UserEntity user = new UserEntity();
 
         when(userDetailsService.loadUserByUsername(request.getEmail())).thenReturn(user);
         when(jwtUtils.generateToken(user)).thenReturn("fakeToken");

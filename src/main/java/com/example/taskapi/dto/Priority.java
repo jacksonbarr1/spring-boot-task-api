@@ -1,4 +1,4 @@
-package com.example.taskmaster.dto;
+package com.example.taskapi.dto;
 
 public enum Priority {
     LOW,

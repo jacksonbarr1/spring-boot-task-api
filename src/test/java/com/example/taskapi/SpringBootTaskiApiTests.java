@@ -1,10 +1,10 @@
-package com.example.taskmaster;
+package com.example.taskapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TaskMasterApplicationTests {
+class SpringBootTaskiApiTests {
 
     @Test
     void contextLoads() {

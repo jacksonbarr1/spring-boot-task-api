@@ -1,13 +1,13 @@
-package com.example.taskmaster;
+package com.example.taskapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TaskMasterApplication {
+public class SpringBootTaskApi {
 
     public static void main(String[] args) {
-        SpringApplication.run(TaskMasterApplication.class, args);
+        SpringApplication.run(SpringBootTaskApi.class, args);
     }
 
 }

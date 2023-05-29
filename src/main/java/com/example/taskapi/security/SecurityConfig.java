@@ -1,4 +1,4 @@
-package com.example.taskmaster.security;
+package com.example.taskapi.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
